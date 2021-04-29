@@ -8,7 +8,7 @@ namespace CombatSystem
     /// <summary>
     /// Represents a character. Not necessarily a player, but could be.
     /// </summary>
-    public class LivingCharacter : IHasHealth, IHasStats
+    public class LivingCharacter : IHasHealth, IMelee, IHasStats
     {
         public int Health { get; set; }
         public int BaseHealth
@@ -20,9 +20,21 @@ namespace CombatSystem
                 ReapplyStats();
             }
         }
+        public int AttackPower { get; set; }
+        public int BaseAttackPower
+        {
+            get => _baseAttackPower;
+            set
+            {
+                AttackPower = _baseAttackPower = value;
+                ReapplyStats();
+            }
+        }
+        public StatManager StatMgr { get; private set; }
 
         private int _baseHealth;
-        public StatManager StatMgr { get; private set; }
+        private int _baseAttackPower;
+
 
         public LivingCharacter(StatManager statManager, IEnumerable<CharacterStat> startingStats)
         {
@@ -30,6 +42,7 @@ namespace CombatSystem
             StatMgr.Stats.OnStatCollectionChanged += Stats_OnStatCollectionChanged;
             StatMgr.Stats.AddRange(startingStats);
             BaseHealth = 1;
+            AttackPower = 1;
         }
 
         private void Stats_OnStatCollectionChanged(object sender, StatCollectionChangedEventArgs e)
@@ -43,7 +56,6 @@ namespace CombatSystem
             Health = _baseHealth;
             StatMgr.Stats.ForEach(stat =>
             {
-                // We only care about health stats
                 if (stat.Attribute == CharacterAttribute.Stamina)
                 {
                     StatMgr.StatModifier.ApplyStat(this, stat);
@@ -53,7 +65,7 @@ namespace CombatSystem
 
         public override string ToString()
         {
-            return $"Health: {Health}";
+            return $"Health: {Health}, Attack Power: {AttackPower}";
         }
     }
 }
