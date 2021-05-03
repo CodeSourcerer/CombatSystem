@@ -1,14 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using CodeSourcerer.CombatSystem;
 
-namespace CombatSystem
+namespace CodeSourcerer.CombatSystem.Entities
 {
     /// <summary>
     /// Represents a character. Not necessarily a player, but could be.
+    /// 
+    /// By current design, this character may not have any weapons. I'm not sure how I feel about this.
+    /// Normally this would sound weird, but maybe this could be an NPC that doesn't have a weapon?
+    /// Maybe it's a stupid distinction that should go away. We'll see.
     /// </summary>
-    public class LivingCharacter : IHasHealth, IMelee, IHasStats
+    /// <remarks>
+    /// It's aliiiiiiive!!
+    /// </remarks>
+    public class LivingCharacter : IMelee, ICharacter
     {
         public int Health { get; set; }
         public int BaseHealth
@@ -50,7 +56,7 @@ namespace CombatSystem
             ReapplyStats();
         }
 
-        public void ReapplyStats()
+        public virtual void ReapplyStats()
         {
             //Console.WriteLine("LivingCharacter.reapplyState()");
             Health = _baseHealth;

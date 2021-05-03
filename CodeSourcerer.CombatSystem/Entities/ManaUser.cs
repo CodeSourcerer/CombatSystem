@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using CodeSourcerer.CombatSystem;
 
-namespace CombatSystem
+namespace CodeSourcerer.CombatSystem.Entities
 {
     /// <summary>
     /// This character is a mana user.
     /// </summary>
-    public class ManaUser : IManaUser, IHasHealth, IHasStats
+    public class ManaUser : IManaUser, ICharacter
     {
         public int Mana { get; set; }
         public int BaseMana

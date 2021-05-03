@@ -28,6 +28,17 @@ namespace CodeSourcerer.CombatSystem
             }
         }
 
+        public void ApplyStat(IMelee target, CharacterStat stat)
+        {
+            if (stat.Attribute == CharacterAttribute.Strength)
+            {
+                if (stat.IsPercentage)
+                    target.AttackPower += target.BaseAttackPower * (stat.Value / 100);
+                else
+                    target.AttackPower += stat.Value * 2;
+            }
+        }
+
         public void ApplyStat(object target, CharacterStat stat)
         {
             if (target is IHasHealth && stat.Attribute == CharacterAttribute.Stamina)
@@ -38,6 +49,11 @@ namespace CodeSourcerer.CombatSystem
             if (target is IManaUser && stat.Attribute == CharacterAttribute.Intellect)
             {
                 ApplyStat((IManaUser)target, stat);
+            }
+
+            if (target is IMelee && stat.Attribute == CharacterAttribute.Strength)
+            {
+                ApplyStat((IMelee)target, stat);
             }
         }
     }
