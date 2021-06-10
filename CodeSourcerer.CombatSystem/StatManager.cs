@@ -9,19 +9,10 @@ namespace CodeSourcerer.CombatSystem
         public StatCollection Stats { get; }
         public IStatModifier StatModifier { get; private set; }
 
-        public StatManager(IStatModifier statModifier)
+        public StatManager(IStatModifier statModifier = null)
         {
             Stats = new StatCollection();
-            StatModifier = statModifier;
-
-            //Stats.OnStatCollectionChanged += _stats_OnStatCollectionChanged;
+            StatModifier = statModifier ?? new StatModifier();
         }
-        
-        //private void _stats_OnStatCollectionChanged(object sender, StatCollectionChangedEventArgs e)
-        //{
-        //    ReapplyStats();
-        //}
-
-        //public abstract void ReapplyStats();
     }
 }

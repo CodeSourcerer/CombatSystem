@@ -55,6 +55,11 @@ namespace CodeSourcerer.CombatSystem.Entities
             });
         }
 
+        public void DoUpdate()
+        {
+            
+        }
+
         public override string ToString()
         {
             return $"{_character}, Mana: {Mana}";

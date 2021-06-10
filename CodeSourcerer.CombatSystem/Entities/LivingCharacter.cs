@@ -69,6 +69,11 @@ namespace CodeSourcerer.CombatSystem.Entities
             });
         }
 
+        public virtual void DoUpdate()
+        {
+
+        }
+
         public override string ToString()
         {
             return $"Health: {Health}, Attack Power: {AttackPower}";

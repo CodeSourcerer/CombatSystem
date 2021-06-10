@@ -9,33 +9,35 @@ namespace CombatSystem
     {
         static void Main(string[] args)
         {
-            List<CharacterStat> startingStats = new List<CharacterStat>();
-            startingStats.Add(new CharacterStat(CharacterAttribute.Stamina, 10));
-            var statMgr = new StatManager(new StatModifier());
+            new CombatSystem().Run();
 
-            ManaUser dagen = new ManaUser(statMgr, startingStats);
-            Console.WriteLine($"Character before BaseHealth set: {dagen}");
+            //List<CharacterStat> startingStats = new List<CharacterStat>();
+            //startingStats.Add(new CharacterStat(CharacterAttribute.Stamina, 10));
+            //var statMgr = new StatManager();
 
-            dagen.BaseHealth = 100;
-            Console.WriteLine($"Character after BaseHealth set: {dagen}");
+            //ManaUser dagen = new ManaUser(statMgr, startingStats);
+            //Console.WriteLine($"Character before BaseHealth set: {dagen}");
 
-            var newStat = new CharacterStat(CharacterAttribute.Stamina, 1);
-            dagen.StatMgr.Stats.Add(newStat);
-            Console.WriteLine($"Character after adding {newStat}: {dagen}");
+            //dagen.BaseHealth = 100;
+            //Console.WriteLine($"Character after BaseHealth set: {dagen}");
 
-            dagen.StatMgr.Stats.Add(new CharacterStat(CharacterAttribute.Intellect, 5));
-            Console.WriteLine($"Character with: \n{dagen.StatMgr.Stats}{dagen}");
+            //var newStat = new CharacterStat(CharacterAttribute.Stamina, 1);
+            //dagen.StatMgr.Stats.Add(newStat);
+            //Console.WriteLine($"Character after adding {newStat}: {dagen}");
 
-            MeleeClass aggromagnet = new MeleeClass(statMgr, startingStats);
-            Console.WriteLine($"Before base stats set: {aggromagnet}");
+            //dagen.StatMgr.Stats.Add(new CharacterStat(CharacterAttribute.Intellect, 5));
+            //Console.WriteLine($"Character with: \n{dagen.StatMgr.Stats}{dagen}");
+
+            //MeleeClass aggromagnet = new MeleeClass(statMgr, startingStats);
+            //Console.WriteLine($"Before base stats set: {aggromagnet}");
             
-            aggromagnet.BaseHealth = 120;
-            aggromagnet.BaseAttackPower = 20;
-            Console.WriteLine($"After base stats set: {aggromagnet}");
+            //aggromagnet.BaseHealth = 120;
+            //aggromagnet.BaseAttackPower = 20;
+            //Console.WriteLine($"After base stats set: {aggromagnet}");
 
-            var bigSwordStat = new CharacterStat(CharacterAttribute.Strength, 10);
-            aggromagnet.StatMgr.Stats.Add(bigSwordStat);
-            Console.WriteLine($"After equipping big sword: {aggromagnet}");
+            //var bigSwordStat = new CharacterStat(CharacterAttribute.Strength, 10);
+            //aggromagnet.StatMgr.Stats.Add(bigSwordStat);
+            //Console.WriteLine($"After equipping big sword: {aggromagnet}");
         }
     }
 }

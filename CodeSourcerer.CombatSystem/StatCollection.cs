@@ -16,7 +16,16 @@ namespace CodeSourcerer.CombatSystem
         private List<CharacterStat> _stats = new List<CharacterStat>();
 
         public CharacterStat this[int index] { get => _stats[index]; set => _stats[index] = value; }
-
+        public int this[CharacterAttribute attr]
+        {
+            get => _stats.Find(s => s.Attribute == attr)?.Value ?? 0;
+            set
+            {
+               var idx = _stats.FindIndex(s => s.Attribute == attr);
+                _stats[idx].Value = value;
+                OnStatCollectionChanged?.Invoke(this, new StatCollectionChangedEventArgs(_stats[idx]));
+            }
+        }
         public int Count => _stats.Count;
 
         public bool IsReadOnly => false;

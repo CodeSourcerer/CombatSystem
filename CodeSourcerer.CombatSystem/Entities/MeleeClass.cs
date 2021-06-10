@@ -11,6 +11,10 @@ namespace CodeSourcerer.CombatSystem.Entities
     {
         public IWeapon MainHand { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public IWeapon OffHand { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public bool Attacking { get; set; }
+        private DateTime _lastAttackTimeMainHand { get; set; } = DateTime.Now;
+        private DateTime _lastAttackTimeOffHand { get; set; } = DateTime.Now;
+        private ICharacter _attackTarget;
 
         public MeleeClass(StatManager statManager, IEnumerable<CharacterStat> startingStats)
             : base (statManager, startingStats)
@@ -30,14 +34,15 @@ namespace CodeSourcerer.CombatSystem.Entities
         /// Attack!!!!
         /// </summary>
         /// <param name="target"></param>
-        /// <param name="weapon"></param>
         /// <returns></returns>
         /// <remarks>
         /// At some point, maybe I want to be able to specify a type of attack.
         /// </remarks>
-        public int Attack(ICharacter target, IWeapon weapon)
+        public void Attack(ICharacter target)
         {
-            throw new NotImplementedException();
+            _attackTarget = target;
+
+            Attacking = _attackTarget != null;
         }
 
         public override void ReapplyStats()
@@ -52,6 +57,28 @@ namespace CodeSourcerer.CombatSystem.Entities
                     StatMgr.StatModifier.ApplyStat(this, stat);
                 }
             });
+        }
+
+        public override void DoUpdate()
+        {
+            base.DoUpdate();
+
+            if (Attacking)
+            {
+                if ((DateTime.Now - _lastAttackTimeMainHand).TotalSeconds >= MainHand.Speed)
+                {
+                    // Calculate damage
+                    // Deal damage to _attackTarget
+                    _lastAttackTimeMainHand = DateTime.Now;
+                }
+
+                if ((DateTime.Now - _lastAttackTimeOffHand).TotalSeconds >= OffHand.Speed)
+                {
+                    // Calculate damage
+                    // Deal damage to _attackTarget
+                    _lastAttackTimeOffHand = DateTime.Now;
+                }
+            }
         }
 
         public override string ToString()

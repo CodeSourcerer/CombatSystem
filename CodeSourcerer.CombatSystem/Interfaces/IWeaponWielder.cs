@@ -12,13 +12,12 @@ namespace CodeSourcerer.CombatSystem
     {
         IWeapon MainHand { get; set; }
         IWeapon OffHand { get; set; }
+        bool Attacking { get; set; }
 
         /// <summary>
-        /// Attack a target with the given weapon
+        /// Attack a target
         /// </summary>
         /// <param name="target"></param>
-        /// <param name="weapon"></param>
-        /// <returns>The damage dealt</returns>
-        int Attack(ICharacter target, IWeapon weapon);
+        void Attack(ICharacter target);
     }
 }

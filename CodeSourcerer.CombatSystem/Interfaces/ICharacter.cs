@@ -9,5 +9,6 @@ namespace CodeSourcerer.CombatSystem
     /// </summary>
     public interface ICharacter : IHasHealth, IHasStats
     {
+        void DoUpdate();
     }
 }
