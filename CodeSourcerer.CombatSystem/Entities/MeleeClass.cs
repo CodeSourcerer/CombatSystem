@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace CodeSourcerer.CombatSystem.Entities
@@ -19,10 +20,7 @@ namespace CodeSourcerer.CombatSystem.Entities
         public MeleeClass(StatManager statManager, IEnumerable<CharacterStat> startingStats)
             : base (statManager, startingStats)
         {
-            StatMgr.Stats.OnStatCollectionChanged += Stats_OnStatCollectionChanged; ;
-            StatMgr.Stats.AddRange(startingStats);
-            BaseHealth = 1;
-            AttackPower = 1;
+            StatMgr.Stats.OnStatCollectionChanged += Stats_OnStatCollectionChanged;
         }
 
         private void Stats_OnStatCollectionChanged(object sender, StatCollectionChangedEventArgs e)
@@ -49,14 +47,6 @@ namespace CodeSourcerer.CombatSystem.Entities
         {
             //Console.WriteLine("LivingCharacter.reapplyState()");
             base.ReapplyStats();
-
-            StatMgr.Stats.ForEach(stat =>
-            {
-                if (stat.Attribute == CharacterAttribute.Strength)
-                {
-                    StatMgr.StatModifier.ApplyStat(this, stat);
-                }
-            });
         }
 
         public override void DoUpdate()

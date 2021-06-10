@@ -4,7 +4,7 @@ using System.Text;
 
 namespace CodeSourcerer.CombatSystem
 {
-    public class StatModifier : IStatModifier
+    public class DefaultStatModifier : IStatModifier
     {
         public void ApplyStat(IHasHealth target, CharacterStat stat)
         {

@@ -21,9 +21,18 @@ namespace CodeSourcerer.CombatSystem
             get => _stats.Find(s => s.Attribute == attr)?.Value ?? 0;
             set
             {
-               var idx = _stats.FindIndex(s => s.Attribute == attr);
-                _stats[idx].Value = value;
-                OnStatCollectionChanged?.Invoke(this, new StatCollectionChangedEventArgs(_stats[idx]));
+                var idx = _stats.FindIndex(s => s.Attribute == attr);
+                if (idx == -1)
+                {
+                    var newStat = new CharacterStat(attr, value);
+                    _stats.Add(newStat);
+                    OnStatCollectionChanged?.Invoke(this, new StatCollectionChangedEventArgs(newStat));
+                }
+                else
+                {
+                    _stats[idx].Value = value;
+                    OnStatCollectionChanged?.Invoke(this, new StatCollectionChangedEventArgs(_stats[idx]));
+                }
             }
         }
         public int Count => _stats.Count;

@@ -88,9 +88,9 @@ namespace CombatSystem
                     if (amount <= 0) throw new ArgumentOutOfRangeException();
                     
                     validInput = true;
-                    _characters[character].StatMgr.Stats[CharacterAttribute.Stamina] = amount;
+                    _characters[character].StatMgr.Stats[attr] = amount;
                 }
-                catch
+                catch (Exception e)
                 {
                     Console.WriteLine("Invalid amount");
                 }

@@ -6,13 +6,13 @@ namespace CodeSourcerer.CombatSystem
 {
     public class StatManager
     {
-        public StatCollection Stats { get; }
+        public Dictionary<CharacterAttribute, int> BaseStats { get; } = new Dictionary<CharacterAttribute, int>(5);
+        public StatCollection Stats { get; } = new StatCollection();
         public IStatModifier StatModifier { get; private set; }
 
         public StatManager(IStatModifier statModifier = null)
         {
-            Stats = new StatCollection();
-            StatModifier = statModifier ?? new StatModifier();
+            StatModifier = statModifier ?? new DefaultStatModifier();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace CodeSourcerer.CombatSystem.Entities
@@ -7,7 +8,7 @@ namespace CodeSourcerer.CombatSystem.Entities
     /// <summary>
     /// This character is a mana user.
     /// </summary>
-    public class ManaUser : IManaUser, ICharacter
+    public class ManaUser : LivingCharacter, IManaUser, ICharacter
     {
         public int Mana { get; set; }
         public int BaseMana
@@ -20,16 +21,11 @@ namespace CodeSourcerer.CombatSystem.Entities
             }
         }
 
-        public int Health     { get => _character.Health;     set => _character.Health = value; }
-        public int BaseHealth { get => _character.BaseHealth; set => _character.BaseHealth = value; }
-        public StatManager StatMgr { get => _character.StatMgr; }
-
         private int _baseMana;
-        private LivingCharacter _character;
 
         public ManaUser(StatManager statManager, IEnumerable<CharacterStat> startingStats)
+            : base (statManager, startingStats)
         {
-            _character = new LivingCharacter(statManager, startingStats);
             StatMgr.Stats.OnStatCollectionChanged += Stats_OnStatCollectionChanged;
             BaseMana = 1;
         }
@@ -39,30 +35,24 @@ namespace CodeSourcerer.CombatSystem.Entities
             ReapplyStats();
         }
 
-        public void ReapplyStats()
+        public override void ReapplyStats()
         {
+            base.ReapplyStats();
             //Console.WriteLine("ManaUser.reapplyState()");
             Mana = _baseMana;
 
-            // We care about health and mana stats
-            _character.StatMgr.Stats.ForEach(stat =>
-            {
-                if (stat.Attribute == CharacterAttribute.Intellect)
-                    _character.StatMgr.StatModifier.ApplyStat(this, stat);
-
-                if (stat.Attribute == CharacterAttribute.Stamina)
-                    _character.ReapplyStats();
-            });
+            int totalInt = StatMgr.BaseStats[CharacterAttribute.Intellect] + StatMgr.Stats.Sum(s => s.Attribute == CharacterAttribute.Intellect ? s.Value : 0);
+            StatMgr.StatModifier.ApplyStat(this, new CharacterStat(CharacterAttribute.Intellect, totalInt));
         }
 
-        public void DoUpdate()
+        public override void DoUpdate()
         {
             
         }
 
         public override string ToString()
         {
-            return $"{_character}, Mana: {Mana}";
+            return $"{base.ToString()}, Mana: {Mana}";
         }
     }
 }
